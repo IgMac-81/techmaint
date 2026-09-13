@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Equipamentos — TechMaint{% endblock %}
+{% block conteudo %}
+<h1>Equipamentos</h1>
+<form method="get" style="display:flex;gap:8px;margin-bottom:16px;">
+  <input name="busca" value="{{ busca }}" placeholder="Buscar por descrição...">
+  <button class="botao" type="submit">Buscar</button>
+</form>
+<a class="botao" href="{{ url_for('equipamentos.novo') }}">+ Novo</a>
+<div class="tabela-rolagem" style="margin-top:16px;">
+  <table>
+    <thead><tr><th>Código</th><th>Descrição</th><th>Ações</th></tr></thead>
+    <tbody>
+      {% for e in equipamentos %}
+      <tr>
+        <td>{{ e.codigo }}</td>
+        <td>{{ e.descricao }}</td>
+        <td><a href="{{ url_for('equipamentos.editar', id_equipamento=e.id_equipamento) }}">Editar</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">Nenhum equipamento cadastrado ainda.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

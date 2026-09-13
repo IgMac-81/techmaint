@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}Painel — TechMaint{% endblock %}
+{% block conteudo %}
+<h1>Painel</h1>
+<div class="cartoes">
+  <div class="cartao"><div class="numero">{{ indicadores.pedidos_abertos }}</div><div class="rotulo">Pedidos abertos</div></div>
+  <div class="cartao"><div class="numero">{{ indicadores.os_em_execucao }}</div><div class="rotulo">OS em execução</div></div>
+  <div class="cartao"><div class="numero">{{ indicadores.os_concluidas }}</div><div class="rotulo">OS concluídas</div></div>
+  <div class="cartao"><div class="numero">{{ indicadores.pecas_em_alerta }}</div><div class="rotulo">Peças em alerta</div></div>
+</div>
+{% endblock %}
