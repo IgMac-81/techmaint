@@ -7,8 +7,12 @@ oficial do Flask.
 """
 
 from pathlib import Path
+from importlib import import_module
+from typing import Any, cast
 
-from flask import Flask, render_template
+_flask = import_module("flask")
+Flask = cast(Any, _flask.Flask)
+render_template = cast(Any, _flask.render_template)
 
 from app.config import get_config
 from app.extensions import csrf, db, login_manager, migrate
