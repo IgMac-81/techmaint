@@ -1,13 +1,13 @@
-__pycache__/
-*.py[cod]
+# Ambiente virtual
 .venv/
 venv/
-env/
-instance/
+
+# Banco de dados local (cada pessoa tem o seu)
 *.db
-*.sqlite3
-.env
-.pytest_cache/
-.ruff_cache/
-.DS_Store
-migrations/versions/__pycache__/
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
