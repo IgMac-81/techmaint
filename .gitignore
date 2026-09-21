@@ -11,3 +11,6 @@ __pycache__/
 
 # Editor
 .vscode/
+
+# Configuracao local de ferramentas
+.claude/
