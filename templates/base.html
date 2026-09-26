@@ -33,6 +33,9 @@
     <a class="marca" href="{{ url_for('listar') }}">TechMaint</a>
     <nav>
       <a href="{{ url_for('listar') }}">Equipamentos</a>
+      <a href="{{ url_for('grupos') }}">Grupos</a>
+      <a href="{{ url_for('subgrupos') }}">Subgrupos</a>
+      <a href="{{ url_for('departamentos') }}">Departamentos</a>
     </nav>
   </header>
 
@@ -55,6 +58,16 @@
   <footer class="rodape">
     TechMaint - projeto base de CRUD com Flask
   </footer>
+
+  <script>
+    document.querySelectorAll('.busca input[name="busca"]').forEach(function (campo) {
+      campo.addEventListener("input", function () {
+        const inicio = campo.selectionStart;
+        campo.value = campo.value.toLocaleUpperCase("pt-BR");
+        campo.setSelectionRange(inicio, inicio);
+      });
+    });
+  </script>
 
 </body>
 </html>

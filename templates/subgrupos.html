@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block titulo %}Subgrupos - TechMaint{% endblock %}
+
+{% block conteudo %}
+
+  <div class="barra">
+    <h1>{% if subgrupo_edicao %}Editar subgrupo{% else %}Cadastrar subgrupo{% endif %}</h1>
+    {% if subgrupo_edicao %}
+      <a class="botao botao--neutro" href="{{ url_for('subgrupos') }}">Novo subgrupo</a>
+    {% endif %}
+  </div>
+
+  <form class="formulario" method="POST"
+    action="{% if subgrupo_edicao %}{{ url_for('editar_subgrupo', id_subgrupo=subgrupo_edicao.IdSubGrupo) }}{% else %}{{ url_for('subgrupos') }}{% endif %}">
+    <label for="Subgrupo">Nome do subgrupo</label>
+    <input type="text" id="Subgrupo" name="Subgrupo"
+      value="{{ subgrupo_edicao.Subgrupo if subgrupo_edicao else '' }}"
+      maxlength="200" required autofocus>
+
+    <label for="Grupo">Grupo</label>
+    <select id="Grupo" name="IdGrupo" required>
+      <option value="">Selecione um grupo</option>
+      {% for grupo in grupos %}
+        <option value="{{ grupo.IdGrupo }}"
+          {% if subgrupo_edicao and grupo.IdGrupo|string == subgrupo_edicao.IdGrupo|string %}selected{% endif %}>
+          {{ grupo.Grupo }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <div class="acoes-formulario">
+      <button class="botao botao--primario" type="submit">
+        {% if subgrupo_edicao %}Salvar alterações{% else %}Cadastrar subgrupo{% endif %}
+      </button>
+      {% if subgrupo_edicao %}
+        <a class="botao botao--neutro" href="{{ url_for('subgrupos') }}">Cancelar</a>
+      {% endif %}
+    </div>
+  </form>
+
+  <form class="busca" method="GET" action="{{ url_for('subgrupos') }}">
+    <input type="text" name="busca" placeholder="Pesquisar subgrupos" value="{{ busca }}">
+    <button class="botao" type="submit" aria-label="Pesquisar" title="Pesquisar">&#128269;</button>
+    {% if busca %}
+      <a class="botao botao--neutro" href="{{ url_for('subgrupos') }}">Limpar</a>
+    {% endif %}
+  </form>
+
+  <h2>Subgrupos existentes</h2>
+  {% if subgrupos %}
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Subgrupo</th>
+          <th>Grupo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for subgrupo in subgrupos %}
+          <tr>
+            <td>{{ subgrupo.IdSubGrupo }}</td>
+            <td>{{ subgrupo.Subgrupo }}</td>
+            <td>
+              {% for grupo in grupos %}
+                {% if grupo.IdGrupo == subgrupo.IdGrupo %}{{ grupo.Grupo }}{% endif %}
+              {% endfor %}
+            </td>
+            <td class="acoes">
+              <a class="botao botao--neutro"
+                href="{{ url_for('editar_subgrupo', id_subgrupo=subgrupo.IdSubGrupo) }}">Editar</a>
+              <form method="POST"
+                action="{{ url_for('apagar_subgrupo', id_subgrupo=subgrupo.IdSubGrupo) }}"
+                onsubmit="return confirm('Excluir o subgrupo {{ subgrupo.Subgrupo }}?')">
+                <button class="botao botao--perigo" type="submit">Excluir</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="vazio">Nenhum subgrupo cadastrado.</p>
+  {% endif %}
+
+  <script>
+    const campoSubgrupo = document.getElementById("Subgrupo");
+    campoSubgrupo.addEventListener("input", function () {
+      const inicio = campoSubgrupo.selectionStart;
+      campoSubgrupo.value = campoSubgrupo.value.toLocaleUpperCase("pt-BR");
+      campoSubgrupo.setSelectionRange(inicio, inicio);
+    });
+  </script>
+
+{% endblock %}
